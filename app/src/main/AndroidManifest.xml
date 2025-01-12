@@ -15,6 +15,11 @@
         android:theme="@style/Theme.KarleuhApp"
         tools:targetApi="31">
         <activity
+            android:name=".user.LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.KarleuhApp" />
+        <activity
             android:name=".user.UserActivity"
             android:exported="false"
             android:label="@string/title_activity_user"
@@ -31,6 +36,23 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.publicvalue.multiplatform.oidc.appsupport.HandleRedirectActivity"
+            android:exported="true">
+            <intent-filter tools:node="removeAll" />
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="cyrilfind.kodo"
+                    android:scheme="https"
+                    android:path="/redirect_uri" />
             </intent-filter>
         </activity>
     </application>

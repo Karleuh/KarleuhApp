@@ -25,11 +25,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 import coil3.request.error
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 
 /**
  * A simple [Fragment] subclass.
@@ -55,15 +50,7 @@ class TaskListFragment : Fragment() {
         }
     )
 
-    private lateinit var recyclerView: RecyclerView
-
-
-
     private val viewModel: TaskListViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
 
     private val createTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -142,7 +129,7 @@ class TaskListFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             TaskListFragment().apply {
                 arguments = Bundle().apply {
                 }
@@ -151,14 +138,6 @@ class TaskListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun refreshAdapter() {
-
-        // le toList est important ici pcq submitList compare hmm (genre là ya besoin de faire une copie de la mutable list. est ce qu'il  y a pas 1000 listes ? qui pourrait dire)
-        //adapter.submitList(taskList.toList())
-        //Log.d("TaskListFragment", "Updated task list size: ${taskList.size}")
-
     }
 
     override fun onResume() {

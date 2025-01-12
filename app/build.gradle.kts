@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.oidc.appsupport)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.androidx.core.ktx)

@@ -1,6 +1,10 @@
 package com.example.karleuhapp.data
 
+import android.util.Log
+
 import com.example.karleuhapp.list.TasksWebService
+import com.example.karleuhapp.user.UserViewModel
+import androidx.activity.viewModels
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -9,8 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 object Api {
-    private const val TOKEN = "84255242cf92eeef2f428f45377c35ed9929b3ae"
-
+    var TOKEN : String? = null
 
 
     private val retrofit by lazy {
@@ -18,27 +21,32 @@ object Api {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addInterceptor { chain ->
-                // intercepteur qui ajoute le `header` d'authentification avec votre token:
-                val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $TOKEN")
-                    .build()
+                val token = TOKEN
+                if (token == null) {
+                    Log.e("Interceptor", "Token is null. Request will be sent without Authorization header.")
+
+                }
+                val newRequestBuilder = chain.request().newBuilder()
+                if (token != null) {
+                    newRequestBuilder.addHeader("Authorization", "Bearer $token")
+                }
+                val newRequest = newRequestBuilder.build()
                 chain.proceed(newRequest)
             }
             .build()
 
-        // transforme le JSON en objets kotlin et inversement
         val jsonSerializer = Json {
             ignoreUnknownKeys = true
             coerceInputValues = true
         }
 
-        // instance retrofit pour implémenter les webServices:
         Retrofit.Builder()
             .baseUrl("https://api.todoist.com/")
             .client(okHttpClient)
             .addConverterFactory(jsonSerializer.asConverterFactory("application/json".toMediaType()))
             .build()
     }
+
 
     val userWebService : UserWebService by lazy {
         retrofit.create(UserWebService::class.java)
