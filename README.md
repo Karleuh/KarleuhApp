@@ -15,7 +15,7 @@ TODO :
 - faire en sorte que la photo de profil fetch soit aussi dans l'activité pour la modifier
 
 PROBLEME CONNU / REMARQUES :
-- Il y a des problèmes de performances, je me suis efforcé de viewModelScope tout ce qui était asynchrone mais des opérations simples lag depuis quelque versions
+- Il y a des problèmes de performances, je me suis efforcé de viewModelScope tout ce qui était asynchrone mais des opérations simples lag depuis quelque versions (je devais relancer le device mais sus quand même)
 - la 1ere intéraction est parfois sans effet tout n'a pas le temps de se configurer
 - J'ai des doutes sur mon implémentation du load d'image par URI parce que c'est de basse qualité dans mon taskListFragment (dans la user activity ça va mais on y récupère directement l'image c'est de la triche) 
 donc ce qui passe par le réseau doit être mal compressé (même après avoir complètement enlevé les bitmaps du code)

@@ -30,19 +30,19 @@ class TaskListViewModel : ViewModel() {
         viewModelScope.launch {
             webService.create(task)
         }
-
+        refresh()
     }
     fun edit(task: Task) {
         viewModelScope.launch {
             webService.update(task)
         }
-
+        refresh()
     }
     fun remove(task: Task) {
         viewModelScope.launch {
             webService.delete(task.id)
         }
-
+        refresh()
     }
 
 }
