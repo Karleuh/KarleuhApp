@@ -9,16 +9,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import coil3.load
+import com.example.karleuhapp.R
 import com.example.karleuhapp.data.Api
 import com.example.karleuhapp.databinding.FragmentTaskListBinding
 import com.example.karleuhapp.detail.DetailActivity
+import com.example.karleuhapp.user.UserActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
+import coil3.request.error
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,24 +44,18 @@ class TaskListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val adapter = TaskListAdapter(onDeleteClick = { task ->
-        taskList.remove(task)
+        //taskList.remove(task)
         viewModel.remove(task)
-        refreshAdapter()
     },
         onEditClick = { task ->
             val intent = Intent(requireContext(), DetailActivity::class.java).apply {
                 putExtra("task", task)
             }
-            createTask.launch(intent)
+            editTask.launch(intent)
         }
     )
 
     private lateinit var recyclerView: RecyclerView
-    private var taskList = mutableListOf(
-        Task(id = "id_1", title = "Task 1", description = "description 1"),
-        Task(id = "id_2", title = "Task 2"),
-        Task(id = "id_3", title = "Task 3")
-    )
 
 
 
@@ -71,30 +70,17 @@ class TaskListFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK) {
             val newTask = result.data?.getSerializableExtra("task") as? Task
             if (newTask != null) {
-
-                val index = taskList.indexOfFirst { it.id == newTask.id }
-                if (index != -1) {
-                    taskList[index] = newTask
-                    viewModel.edit(newTask)
-                }
-                else {
-                    taskList.add(newTask)
-                    viewModel.add(newTask)
-                }
-            }
-
-            refreshAdapter()
+                viewModel.add(newTask)
             }
         }
-
+    }
 
     private val editTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val newTask = result.data?.getSerializableExtra("task") as? Task
             if (newTask != null) {
-                taskList.add(newTask)
+                viewModel.edit(newTask)
             }
-            refreshAdapter()
         }
     }
 
@@ -104,12 +90,9 @@ class TaskListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val viewModel: TaskListViewModel by viewModels()
         //Initialize binding
         _binding = FragmentTaskListBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        adapter.submitList(taskList)
-        refreshAdapter()
         return rootView
     }
 
@@ -124,17 +107,27 @@ class TaskListFragment : Fragment() {
         fabAdd.setOnClickListener {
             val intent = Intent(requireContext(), DetailActivity::class.java)
             createTask.launch(intent)
-            refreshAdapter()
+        }
+
+        val imageViewAvatar: ImageView = binding.imageViewAvatar
+        imageViewAvatar.load("https://goo.gl/gEgYUd")
+        // Définir un OnClickListener sur l'ImageView
+        imageViewAvatar.setOnClickListener {
+            // Créer un Intent pour démarrer SecondActivity
+            val intent = Intent(requireContext(), UserActivity::class.java)
+            startActivity(intent)
         }
 
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             viewModel.tasksStateFlow.collect { newList ->
                 // cette lambda est exécutée à chaque fois que la liste est mise à jour dans le VM
                 // -> ici, on met à jour la liste dans l'adapter
-                taskList = newList.toMutableList()
-                refreshAdapter()
+                adapter.submitList(newList)
+
             }
         }
+
+        viewModel.refresh()
     }
 
 
@@ -162,24 +155,40 @@ class TaskListFragment : Fragment() {
 
     private fun refreshAdapter() {
 
-        // le toList est important ici pcq submitList compare bizarrement hmm (genre là ya besoin de faire une copie de la mutable list. est ce qu'il  y a pas 1000 listes ? qui pourrait dire)
-        adapter.submitList(taskList.toList())
-        Log.d("TaskListFragment", "Updated task list size: ${taskList.size}")
+        // le toList est important ici pcq submitList compare hmm (genre là ya besoin de faire une copie de la mutable list. est ce qu'il  y a pas 1000 listes ? qui pourrait dire)
+        //adapter.submitList(taskList.toList())
+        //Log.d("TaskListFragment", "Updated task list size: ${taskList.size}")
 
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.refresh()
         lifecycleScope.launch {
             mySuspendMethod()
         }
     }
 
     private suspend fun mySuspendMethod() {
-        val user = Api.userWebService.fetchUser().body()!!
-        binding.userTextViewID.text = user.name
+        //
+        if (view == null || !isAdded) {
+            return
+        }
+
+        val imageViewAvatar = binding.imageViewAvatar
+
+        try {
+            val user = Api.userWebService.fetchUser().body()!!
+            binding.userTextViewID.text = user.name
+            imageViewAvatar.load(user.avatar) {
+                error(R.drawable.ic_launcher_background) // image par défaut en cas d'erreur
+            }
+        } catch (e: Exception) {
+            Log.e("TaskListFragment", "Erreur lors de la récupération des données utilisateur", e)
+        }
+
+        viewModel.refresh()
     }
+
 
 
 }

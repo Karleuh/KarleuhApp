@@ -1,9 +1,12 @@
 package com.example.karleuhapp.list
 
+import android.graphics.Bitmap
+import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.karleuhapp.data.Api
+import com.example.karleuhapp.data.toRequestBody
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -24,21 +27,27 @@ class TaskListViewModel : ViewModel() {
         }
     }
 
-    // à compléter plus tard:
+    // Pas sûr de l'utilité des refresh mais ça semble aider (d'un pdv ressources c'est très suspect)
     fun add(task: Task) {
         viewModelScope.launch {
             webService.create(task)
         }
+
+        refresh()
     }
     fun edit(task: Task) {
         viewModelScope.launch {
             webService.update(task)
         }
+
+        refresh()
     }
     fun remove(task: Task) {
         viewModelScope.launch {
             webService.delete(task.id)
         }
+
+        refresh()
     }
 
 }
