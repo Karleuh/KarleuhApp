@@ -12,9 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import com.example.karleuhapp.R
 import com.example.karleuhapp.data.Api
@@ -39,7 +37,6 @@ class TaskListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val adapter = TaskListAdapter(onDeleteClick = { task ->
-        //taskList.remove(task)
         viewModel.remove(task)
     },
         onEditClick = { task ->
@@ -77,7 +74,6 @@ class TaskListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        //Initialize binding
         _binding = FragmentTaskListBinding.inflate(inflater, container, false)
         val rootView = binding.root
         return rootView
@@ -98,9 +94,7 @@ class TaskListFragment : Fragment() {
 
         val imageViewAvatar: ImageView = binding.imageViewAvatar
         imageViewAvatar.load("https://goo.gl/gEgYUd")
-        // Définir un OnClickListener sur l'ImageView
         imageViewAvatar.setOnClickListener {
-            // Créer un Intent pour démarrer SecondActivity
             val intent = Intent(requireContext(), UserActivity::class.java)
             startActivity(intent)
         }
@@ -119,15 +113,7 @@ class TaskListFragment : Fragment() {
 
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TaskListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance() =
             TaskListFragment().apply {
@@ -148,7 +134,7 @@ class TaskListFragment : Fragment() {
     }
 
     private suspend fun mySuspendMethod() {
-        //
+
         if (view == null || !isAdded) {
             return
         }

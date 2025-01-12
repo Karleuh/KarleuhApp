@@ -36,7 +36,6 @@ class UserViewModel : ViewModel() {
     lateinit var oAuthClient: OpenIdConnectClient
 
     init {
-        // Initialisation à l'intérieur de init() garantit que les objets sont prêts à être utilisés
         codeAuthFlowFactory = AndroidCodeAuthFlowFactory()
         oAuthClient = OpenIdConnectClient {
             endpoints {

@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible"
+    android:background="#F9F9F9"
+    android:padding="20dp"
     tools:context=".list.TaskListFragment">
 
-    <!-- Ajout d'un ID au TextView -->
-    <TextView
-        android:id="@+id/userTextViewID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<TextView
+    android:id="@+id/userTextViewID"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/hello_blank_fragment"
+    android:textColor="#2C3E50"
+    android:textSize="20sp"
+    android:padding="16dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="Welcome, User!" />
 
-    <ImageView
-        android:id="@+id/imageViewAvatar"
-        android:layout_width="208dp"
-        android:layout_height="195dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerviewID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="@+id/userTextViewID"
-        app:layout_constraintTop_toTopOf="@+id/userTextViewID" />
+<ImageView
+    android:id="@+id/imageViewAvatar"
+    android:layout_width="130dp"
+    android:layout_height="130dp"
+    android:layout_marginTop="20dp"
+    android:contentDescription="avatar image"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/userTextViewID"
+    tools:src="@tools:sample/avatars" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/NewTaskfloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="52dp"
-        android:clickable="true"
-        android:contentDescription="add task"
-        android:focusable="true"
-        android:src="@drawable/baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recyclerviewID"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="24dp"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/imageViewAvatar"
+    app:layout_constraintBottom_toTopOf="@id/NewTaskfloatingActionButton"
+    android:padding="10dp"
+    tools:listitem="@layout/item_task" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/NewTaskfloatingActionButton"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="24dp"
+    android:contentDescription="add task button"
+    android:backgroundTint="#007AFF"
+    android:src="@drawable/baseline_add_24"
+    android:tint="#FFFFFF"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

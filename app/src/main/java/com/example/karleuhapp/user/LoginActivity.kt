@@ -1,10 +1,8 @@
 package com.example.karleuhapp.user
 
 import android.content.Intent
-import androidx.compose.foundation.border
 
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,15 +31,13 @@ class LoginActivity : ComponentActivity() {
             }
         }
 
-        // Observer le résultat de l'authentification
         viewModel.authResult.observe(this) { result ->
             if (result != null) {
                 if (result.success) {
-                    // Authentification réussie, naviguer vers MainActivity
+
                     Api.TOKEN = result.accessToken
                     navigateToMainActivity()
                 } else {
-                    // Authentification échouée, afficher un message d'erreur
                     Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -50,17 +46,14 @@ class LoginActivity : ComponentActivity() {
 
     @Composable
     fun LoginScreen(viewModel: UserViewModel) {
-        // Observer le résultat de l'authentification
+
         val authResult = viewModel.authResult.value
 
-        // Si l'authentification réussie, naviguer vers MainActivity
         LaunchedEffect(authResult) {
             if (authResult != null) {
                 if (authResult.success) {
-                    // Authentification réussie, naviguer vers MainActivity
                     navigateToMainActivity()
                 } else {
-                    // Authentification échouée, afficher un message d'erreur
                     Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -87,14 +80,13 @@ class LoginActivity : ComponentActivity() {
         }
     }
     private fun login() {
-        // Appeler la méthode login du ViewModel pour démarrer l'authentification
         viewModel.login(this)
     }
 
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // Terminer LoginActivity pour éviter que l'utilisateur revienne
+        finish()
     }
 }
 

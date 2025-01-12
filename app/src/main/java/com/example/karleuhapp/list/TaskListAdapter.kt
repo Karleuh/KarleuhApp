@@ -2,13 +2,9 @@ package com.example.karleuhapp.list
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.karleuhapp.R
-import com.example.karleuhapp.databinding.ActivityMainBinding
 import com.example.karleuhapp.databinding.ItemTaskBinding
 import androidx.recyclerview.widget.ListAdapter
 

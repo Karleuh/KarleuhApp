@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class TaskListViewModel : ViewModel() {
     private val webService = Api.tasksWebService
 
-    public val tasksStateFlow = MutableStateFlow<List<Task>>(emptyList())
+    val tasksStateFlow = MutableStateFlow<List<Task>>(emptyList())
 
     fun refresh() {
         viewModelScope.launch {
@@ -31,21 +31,18 @@ class TaskListViewModel : ViewModel() {
             webService.create(task)
         }
 
-        refresh()
     }
     fun edit(task: Task) {
         viewModelScope.launch {
             webService.update(task)
         }
 
-        refresh()
     }
     fun remove(task: Task) {
         viewModelScope.launch {
             webService.delete(task.id)
         }
 
-        refresh()
     }
 
 }

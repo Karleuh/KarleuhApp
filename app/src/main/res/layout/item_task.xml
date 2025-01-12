@@ -1,45 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
 
+    <!-- Titre de la tâche -->
     <TextView
         android:id="@+id/item_task_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@android:color/holo_blue_bright" />
+        android:background="#003366"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Task Title" />
 
+    <!-- Description de la tâche -->
     <TextView
         android:id="@+id/item_task_description"
         android:layout_width="match_parent"
         android:layout_height="69dp"
-        android:background="@android:color/holo_blue_bright" />
+        android:background="#003366"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Task Description" />
 
+    <!-- Boutons pour supprimer et modifier -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="16dp">
 
+        <!-- Bouton Supprimer -->
         <ImageButton
             android:id="@+id/removeTaskButton"
-            android:layout_width="197dp"
-            android:layout_height="62dp"
-            android:contentDescription="remove task"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:contentDescription="Remove task"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            app:tint="#D32F2F" />
 
-            app:srcCompat="@android:drawable/ic_menu_delete" />
-
+        <!-- Bouton Modifier -->
         <ImageButton
             android:id="@+id/editTaskButton"
-            android:layout_width="209dp"
-            android:layout_height="67dp"
-            android:contentDescription="edit task"
-
-            app:srcCompat="?android:attr/actionModeFindDrawable" />
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:contentDescription="Edit task"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:srcCompat="?android:attr/actionModeFindDrawable"
+            app:tint="#388E3C" />
     </LinearLayout>
 
 </LinearLayout>
-
 

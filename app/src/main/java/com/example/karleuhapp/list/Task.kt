@@ -1,7 +1,6 @@
 package com.example.karleuhapp.list
 import kotlinx.serialization.SerialName
-import java.io.Serializable
-import java.util.UUID
+
 
 
 @kotlinx.serialization.Serializable
