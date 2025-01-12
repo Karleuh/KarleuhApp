@@ -12,16 +12,12 @@ PickPhoto, command de l'api SYNC pour modifier les propriétés, tout semble mar
 TODO : 
 - fin du TP2 
 - permissions anciennes versions android
-- revoir les coroutines et les appels api, il y a des petit problèmes de performance à vu de nez et d'après logcat alors qu'on ne fait pas grand chose
 - faire en sorte que la photo de profil fetch soit aussi dans l'activité pour la modifier
 
-PROBLEME CONNU :
+PROBLEME CONNU / REMARQUES :
+- Il y a des problèmes de performances, je me suis efforcé de viewModelScope tout ce qui était asynchrone mais des opérations simples lag depuis quelque versions
 - la 1ere intéraction est parfois sans effet tout n'a pas le temps de se configurer
-
-REMARQUES :
 - J'ai des doutes sur mon implémentation du load d'image par URI parce que c'est de basse qualité dans mon taskListFragment (dans la user activity ça va mais on y récupère directement l'image c'est de la triche) 
 donc ce qui passe par le réseau doit être mal compressé (même après avoir complètement enlevé les bitmaps du code)
-- Les dépendances pour le viewModel sont complexes il y a de bonnes chances de tomber sur des incompatibilités et les infos sur quelles versions 
-utiliser ne sont pas immédiatement trouvables sur internet (trouvables quand même)
-- Des imports android ont fait l'affaire plutôt que de coil pour pas mal de choses
-- L'IDE pleure pour beaucoup de choses à tort (je crois) et à raison (c'est sûr)
+- Des imports android ont fait l'affaire plutôt que de coil pour pas mal de choses, ce qui explique peut être les points précédent
+- L'IDE pleure pour beaucoup de choses à tort  et à raison 

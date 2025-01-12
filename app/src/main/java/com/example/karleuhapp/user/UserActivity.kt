@@ -78,7 +78,6 @@ class UserActivity : ComponentActivity() {
                         Log.d("PhotoPicker", "Selected URI: $selectedUri")
                         lifecycleScope.launch {
                             val context: Context = applicationContext
-                            val user = Api.userWebService.fetchUser().body()!!
                             viewModel.updateAvatar(selectedUri, context)
                         }
                     } else {
@@ -133,7 +132,7 @@ class UserActivity : ComponentActivity() {
 
                 // Section pour modifier le nom d'utilisateur
                 Text(
-                    text = "Nom d'utilisateur :",
+                    text = "User name :",
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
 
@@ -164,7 +163,7 @@ class UserActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
                 ) {
-                    Text("Mettre à jour", color = Color.White)
+                    Text("Update username", color = Color.White)
                 }
             }
         }

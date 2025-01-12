@@ -32,22 +32,17 @@ class UserViewModel : ViewModel() {
     private val _authResult = MutableLiveData<AuthResult?>()
     val authResult: LiveData<AuthResult?> get() = _authResult
 
-    lateinit var codeAuthFlowFactory: AndroidCodeAuthFlowFactory
-    lateinit var oAuthClient: OpenIdConnectClient
-
-    init {
-        codeAuthFlowFactory = AndroidCodeAuthFlowFactory()
-        oAuthClient = OpenIdConnectClient {
-            endpoints {
-                authorizationEndpoint = "https://todoist.com/oauth/authorize"
-                tokenEndpoint = "https://todoist.com/oauth/access_token"
-            }
-
-            clientId = "a9400191c656400fb31a043e530c5522"
-            clientSecret = "198815c02ac94f029a00338135a45123"
-            scope = "task:add,data:read_write,data:delete"
-            redirectUri = "https://cyrilfind.kodo/redirect_uri"
+    var codeAuthFlowFactory: AndroidCodeAuthFlowFactory = AndroidCodeAuthFlowFactory()
+    private var oAuthClient: OpenIdConnectClient = OpenIdConnectClient {
+        endpoints {
+            authorizationEndpoint = "https://todoist.com/oauth/authorize"
+            tokenEndpoint = "https://todoist.com/oauth/access_token"
         }
+
+        clientId = "a9400191c656400fb31a043e530c5522"
+        clientSecret = "198815c02ac94f029a00338135a45123"
+        scope = "task:add,data:read_write,data:delete"
+        redirectUri = "https://cyrilfind.kodo/redirect_uri"
     }
 
     fun checkTokenAndNavigate() {
