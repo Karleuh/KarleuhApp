@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 
 import coil3.compose.AsyncImage
+import com.example.karleuhapp.data.Api
 import kotlinx.coroutines.launch
 
 class UserActivity : ComponentActivity() {
@@ -40,6 +42,7 @@ class UserActivity : ComponentActivity() {
 
         setContent {
             var uri: Uri? by remember { mutableStateOf(null) }
+            var username by remember { mutableStateOf("") }
             val viewModel: UserViewModel by viewModels()
 
 
@@ -55,10 +58,13 @@ class UserActivity : ComponentActivity() {
             //PhotoPicker
             val pickMedia = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { selectedUri ->
                 if (selectedUri != null) {
+                    uri = selectedUri
                     Log.d("PhotoPicker", "Selected URI: $selectedUri")
                     lifecycleScope.launch {
                         val context: Context = applicationContext
-                        viewModel.updateAvatar(selectedUri, context) }
+                        val user = Api.userWebService.fetchUser().body()!!
+                        viewModel.updateAvatar(selectedUri, context)
+                    }
                 } else {
                     Log.d("PhotoPicker", "No media selected")
                 }
@@ -79,12 +85,31 @@ class UserActivity : ComponentActivity() {
                 Button(
                     onClick = {
                         pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+
                     },
                     content = { Text("Pick photo") }
                 )
-            }
 
+                Text(text = "Nom d'utilisateur :")
+
+                TextField(
+                    value = username,
+                    onValueChange = { username = it },
+                    label = { Text("Modifier votre nom") }
+                )
+
+                Button(onClick = {
+                    if (username.isNotEmpty()) {
+                        viewModel.updateName(username)
+                    }
+                }) {
+                    Text("Mettre à jour")
+                }
+
+            }
         }
 
     }
+
 }
+
