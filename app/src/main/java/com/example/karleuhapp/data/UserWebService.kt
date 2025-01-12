@@ -22,24 +22,3 @@ interface UserWebService {
 
 }
 
-fun Bitmap.toRequestBody(): MultipartBody.Part {
-    val tmpFile = File.createTempFile("avatar", "jpg")
-    tmpFile.outputStream().use { // *use*: open et close automatiquement
-        this.compress(Bitmap.CompressFormat.JPEG, 100, it) // *this* est le bitmap ici
-    }
-    return MultipartBody.Part.createFormData(
-        name = "avatar",
-        filename = "avatar.jpg",
-        body = tmpFile.readBytes().toRequestBody()
-    )
-}
-
-private fun Uri.toRequestBody(context: Context): MultipartBody.Part {
-    val fileInputStream = context.contentResolver.openInputStream(this)!!
-    val fileBody = fileInputStream.readBytes().toRequestBody()
-    return MultipartBody.Part.createFormData(
-        name = "avatar",
-        filename = "avatar.jpg",
-        body = fileBody
-    )
-}

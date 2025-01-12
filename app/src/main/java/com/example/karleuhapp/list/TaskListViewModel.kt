@@ -1,12 +1,10 @@
 package com.example.karleuhapp.list
 
-import android.graphics.Bitmap
-import android.provider.MediaStore
+
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.karleuhapp.data.Api
-import com.example.karleuhapp.data.toRequestBody
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
